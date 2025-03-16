@@ -16,8 +16,8 @@ const IssuesPage = async () => {
                   <Table.ColumnHeaderCell>
                     Title
                   </Table.ColumnHeaderCell>
-                  <Table.ColumnHeaderCell className='hidden md:table-cell'>description</Table.ColumnHeaderCell>
-                  <Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
+                  <Table.ColumnHeaderCell className='hidden md:table-cell'>Description</Table.ColumnHeaderCell>
+                  <Table.ColumnHeaderCell className='hidden md:table-cell'>Created</Table.ColumnHeaderCell>
               </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -28,7 +28,7 @@ const IssuesPage = async () => {
                         <div className='block md:hidden'>{issue.status}</div>
                       </Table.ColumnHeaderCell>
                       <Table.ColumnHeaderCell className='hidden md:table-cell'>{issue.description}</Table.ColumnHeaderCell>
-                      <Table.ColumnHeaderCell className='hidden md:table-cell'>{issue.status}</Table.ColumnHeaderCell>
+                      <Table.ColumnHeaderCell className='hidden md:table-cell'>{issue.createdAt.toDateString()}</Table.ColumnHeaderCell>
                     </Table.Row>
                 ))}
           </Table.Body>
