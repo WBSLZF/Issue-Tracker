@@ -1,12 +1,40 @@
 import React from 'react'
-import { Button } from '@radix-ui/themes'
+import { Button, Table } from '@radix-ui/themes'
 import Link from 'next/link'
-const IssuesPage = () => {
+import prisma from '../lib/prisma'
+const IssuesPage = async () => {
+  const issues = await prisma.issue.findMany()
   return (
       <div>
-        <Button><Link href = "./issues/newIssues">New Issues</Link></Button>
+        <div className = "mb-5 pt-5">
+          <Button><Link href = "./issues/newIssues">New Issues</Link></Button>
+        </div>
+
+        <Table.Root variant='surface'>
+          <Table.Header>
+              <Table.Row>
+                  <Table.ColumnHeaderCell>
+                    Title
+                  </Table.ColumnHeaderCell>
+                  <Table.ColumnHeaderCell className='hidden md:table-cell'>description</Table.ColumnHeaderCell>
+                  <Table.ColumnHeaderCell className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
+              </Table.Row>
+          </Table.Header>
+          <Table.Body>
+                {issues.map(issue => (
+                    <Table.Row key={issue.id}>
+                      <Table.ColumnHeaderCell>
+                        {issue.title}
+                        <div className='block md:hidden'>{issue.status}</div>
+                      </Table.ColumnHeaderCell>
+                      <Table.ColumnHeaderCell className='hidden md:table-cell'>{issue.description}</Table.ColumnHeaderCell>
+                      <Table.ColumnHeaderCell className='hidden md:table-cell'>{issue.status}</Table.ColumnHeaderCell>
+                    </Table.Row>
+                ))}
+          </Table.Body>
+        </Table.Root>
       </div>
-  )
+    )
 }
 
 export default IssuesPage
