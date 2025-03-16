@@ -12,18 +12,27 @@ import {z} from "zod"
 import { createIssueSchema } from '@/app/validationIssueSchema';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
+
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
   ssr: false,
 })
 
-type IssueForm = z.infer<typeof createIssueSchema>
-
 const newIssues = () => {
+  type IssueForm = z.infer<typeof createIssueSchema>
   const {register,handleSubmit,control,formState: {errors}} = 
   useForm<IssueForm>({resolver:zodResolver(createIssueSchema)})
   const route = useRouter()
   const [error, setError] = useState("")
   const [isSubmitting, setisSubmitting] = useState(false)
+  const onSubmit = handleSubmit(async (data)=>{
+      try {
+        setisSubmitting(true)
+        await axios.post("/api/issues",data)
+        route.push("/issues")
+      } catch (error) {
+        setError('An unexpected error occured')
+      }
+    })
   return (
     <div className = "max-w-lg p-5">
       {error && (
@@ -37,15 +46,7 @@ const newIssues = () => {
         </Callout.Root>
       )}
 
-      <form className='space-y-2' onSubmit={handleSubmit(async (data)=>{
-        try {
-          setisSubmitting(true)
-          await axios.post("/api/issues",data)
-          route.push("/issues")
-        } catch (error) {
-          setError('An unexpected error occured')
-        }
-      })}> 
+      <form className='space-y-2' onSubmit={onSubmit}> 
           <TextField.Root placeholder="Input the title…" {...register("title")}></TextField.Root>
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
           <Controller
