@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {z} from "zod"
 import { createIssueSchema } from '@/app/validationIssueSchema';
 import ErrorMessage from '@/app/components/ErrorMessage';
+import Spinner from '@/app/components/Spinner';
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
   ssr: false,
 })
@@ -22,6 +23,7 @@ const newIssues = () => {
   useForm<IssueForm>({resolver:zodResolver(createIssueSchema)})
   const route = useRouter()
   const [error, setError] = useState("")
+  const [isSubmitting, setisSubmitting] = useState(false)
   return (
     <div className = "max-w-lg p-5">
       {error && (
@@ -37,6 +39,7 @@ const newIssues = () => {
 
       <form className='space-y-2' onSubmit={handleSubmit(async (data)=>{
         try {
+          setisSubmitting(true)
           await axios.post("/api/issues",data)
           route.push("/issues")
         } catch (error) {
@@ -52,7 +55,7 @@ const newIssues = () => {
             <SimpleMDE placeholder="Input the Description…" {...field}/>}
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
-          <Button>Submit New Issues</Button> 
+          <Button disabled={isSubmitting}>Submit New Issues{isSubmitting && (<Spinner/>)}</Button> 
       </form>
     </div>
   )
