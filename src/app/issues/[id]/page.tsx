@@ -1,11 +1,12 @@
+import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import prisma from "@/app/lib/prisma";
+import { Card, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 interface props {
   params: { id: string };
 }
 const IssueDetailPage = async ({ params }: props) => {
-  const id = params.id;
-
+  const { id } = await params;
   // 验证id是否为有效数字
   if (!id || isNaN(parseInt(id))) {
     notFound();
@@ -18,11 +19,15 @@ const IssueDetailPage = async ({ params }: props) => {
   if (!issueDetail) notFound();
 
   return (
-    <div>
-      <p>{issueDetail.title}</p>
-      <p>{issueDetail.description}</p>
-      <p>{issueDetail.status}</p>
-      <p>{issueDetail.createdAt.getDate()}</p>
+    <div className="grid gap-y-2">
+      <Heading>{issueDetail.title}</Heading>
+      <div className="flex items-center gap-x-4">
+        <Text>{issueDetail.description}</Text>
+        <IssueStatusBadge status={issueDetail.status}></IssueStatusBadge>
+      </div>
+      <Card className="max-w-xl">
+        <Text>{issueDetail.createdAt.toDateString()}</Text>
+      </Card>
     </div>
   );
 };
