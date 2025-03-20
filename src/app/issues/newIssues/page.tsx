@@ -17,7 +17,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-const newIssues = async () => {
+const newIssues = () => {
   type IssueForm = z.infer<typeof createIssueSchema>;
   const {
     register,
