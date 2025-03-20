@@ -18,7 +18,6 @@ const IssueDetailPage = async ({ params }: props) => {
   });
 
   if (!issueDetail) notFound();
-
   return (
     <div className="grid gap-y-2">
       <Heading>{issueDetail.title}</Heading>
