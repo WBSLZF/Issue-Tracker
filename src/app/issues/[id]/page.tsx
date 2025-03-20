@@ -22,11 +22,11 @@ const IssueDetailPage = async ({ params }: props) => {
     <div className="grid gap-y-2">
       <Heading>{issueDetail.title}</Heading>
       <div className="flex items-center gap-x-4">
-        <Text>{issueDetail.description}</Text>
         <IssueStatusBadge status={issueDetail.status}></IssueStatusBadge>
+        <Text>{issueDetail.createdAt.toDateString()}</Text>
       </div>
       <Card className="max-w-xl">
-        <Text>{issueDetail.createdAt.toDateString()}</Text>
+        <Text>{issueDetail.description}</Text>
       </Card>
     </div>
   );
