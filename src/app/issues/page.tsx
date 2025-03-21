@@ -1,8 +1,8 @@
 import { Table } from "@radix-ui/themes";
-import IssueStatusBadge from "../components/IssueStatusBadge";
 import prisma from "../lib/prisma";
 import IssueAction from "./IssueAction";
-import Link from "../components/Link";
+import IssueTableBody from "./IssueTableBody";
+import IssueTableHeader from "./IssueTableHeader";
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
   return (
@@ -10,31 +10,10 @@ const IssuesPage = async () => {
       <IssueAction />
       <Table.Root variant="surface">
         <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
-              Status
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
-              Created
-            </Table.ColumnHeaderCell>
-          </Table.Row>
+          <IssueTableHeader />
         </Table.Header>
         <Table.Body>
-          {issues.map((issue) => (
-            <Table.Row key={issue.id}>
-              <Table.ColumnHeaderCell>
-                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-                <div className="block md:hidden">{issue.status}</div>
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="hidden md:table-cell">
-                <IssueStatusBadge status={issue.status}></IssueStatusBadge>
-              </Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell className="hidden md:table-cell">
-                {issue.createdAt.toDateString()}
-              </Table.ColumnHeaderCell>
-            </Table.Row>
-          ))}
+          <IssueTableBody issues={issues} />
         </Table.Body>
       </Table.Root>
     </div>
