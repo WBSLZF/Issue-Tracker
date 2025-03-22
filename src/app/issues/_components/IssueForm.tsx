@@ -1,7 +1,7 @@
 "use client";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import { createIssueSchema } from "@/app/validationIssueSchema";
+import { validateIssueSchema } from "@/app/validationIssueSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Issue } from "@prisma/client";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
@@ -22,13 +22,13 @@ interface props {
   issue?: Issue;
 }
 const IssueForm = ({ issue }: props) => {
-  type IssueFormData = z.infer<typeof createIssueSchema>;
+  type IssueFormData = z.infer<typeof validateIssueSchema>;
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IssueFormData>({ resolver: zodResolver(createIssueSchema) });
+  } = useForm<IssueFormData>({ resolver: zodResolver(validateIssueSchema) });
   const route = useRouter();
   const [error, setError] = useState("");
   const [isSubmitting, setisSubmitting] = useState(false);
