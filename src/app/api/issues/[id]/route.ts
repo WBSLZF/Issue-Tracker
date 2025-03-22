@@ -2,10 +2,8 @@ import { NextResponse } from "next/server";
 import { validateIssueSchema } from "@/app/validationIssueSchema";
 import prisma from "@/app/lib/prisma";
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+
+export async function PATCH(request: Request, { params }: { params:  Promise<{ id: string }>}) {
   const body = await request.json();
   const validataResult = validateIssueSchema.safeParse(body);
   if (!validataResult.success) {

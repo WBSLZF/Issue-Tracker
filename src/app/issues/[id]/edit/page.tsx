@@ -2,7 +2,7 @@ import prisma from "@/app/lib/prisma";
 import { notFound } from "next/navigation";
 import IssueForm from "../../_components/IssueForm";
 interface props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 const EditPage = async ({ params }: props) => {
   const { id } = await params;

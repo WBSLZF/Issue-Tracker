@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import IssueDetailContainer from "./IssueDetailContainer";
 import IssueEdittingButton from "./IssueSubmittingButton";
 interface props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 const IssueDetailPage = async ({ params }: props) => {
   const { id } = await params;
