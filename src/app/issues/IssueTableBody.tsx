@@ -8,7 +8,9 @@ const IssueTableBody = ({ issues }: { issues: Issue[] }) => {
     <Table.Row key={issue.id}>
       <Table.ColumnHeaderCell>
         <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-        <div className="block md:hidden">{issue.status}</div>
+        <div className="block md:hidden">
+          <IssueStatusBadge status={issue.status}></IssueStatusBadge>
+        </div>
       </Table.ColumnHeaderCell>
       <Table.ColumnHeaderCell className="hidden md:table-cell">
         <IssueStatusBadge status={issue.status}></IssueStatusBadge>
