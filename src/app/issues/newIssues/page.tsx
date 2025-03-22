@@ -1,5 +1,11 @@
-import IssueForm from "../_components/IssueForm";
+"use client";
+import dynamic from "next/dynamic";
+import LoadingIssueForm from "../_components/LoadingIssueForm";
 
+const IssueForm = dynamic(() => import("../_components/IssueForm"), {
+  ssr: false,
+  loading: () => <LoadingIssueForm />,
+});
 const NewIssuesPage = () => {
   return <IssueForm />;
 };

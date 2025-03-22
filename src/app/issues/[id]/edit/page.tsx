@@ -1,19 +1,26 @@
+// Server Component
 import prisma from "@/app/lib/prisma";
 import { notFound } from "next/navigation";
-import IssueForm from "../../_components/IssueForm";
-interface props {
-  params: Promise<{ id: string }>;
+import EditIssueClient from "./EditIssueClient";
+
+interface Props {
+  params: { id: string };
 }
-const EditPage = async ({ params }: props) => {
-  const { id } = await params;
+
+const EditIssuePage = async ({ params }: Props) => {
+  const { id } = params;
+
   if (!id || isNaN(parseInt(id))) {
     notFound();
   }
+
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(id) },
   });
+
   if (!issue) notFound();
-  return <IssueForm issue={issue} />;
+
+  return <EditIssueClient issue={issue} />;
 };
 
-export default EditPage;
+export default EditIssuePage;
