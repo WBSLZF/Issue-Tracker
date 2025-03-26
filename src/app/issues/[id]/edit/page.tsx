@@ -8,7 +8,7 @@ interface Props {
 }
 
 const EditIssuePage = async ({ params }: Props) => {
-  const { id } = params;
+  const { id } = await params;
 
   if (!id || isNaN(parseInt(id))) {
     notFound();
