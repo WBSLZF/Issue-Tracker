@@ -5,13 +5,13 @@ import Markdown from "react-markdown";
 
 const IssueDetailContainer = ({ issueDetail }: { issueDetail: Issue }) => {
   return (
-    <div>
+    <div className="max-w-full mr-4">
       <Heading>{issueDetail.title}</Heading>
       <div className="flex items-center gap-x-4">
         <IssueStatusBadge status={issueDetail.status}></IssueStatusBadge>
         <Text>{issueDetail.createdAt.toDateString()}</Text>
       </div>
-      <Card className="max-w-xl prose mt-2">
+      <Card className="prose mt-4 py-3 max-w-full">
         <Markdown>{issueDetail.description}</Markdown>
       </Card>
     </div>
