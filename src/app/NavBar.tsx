@@ -5,7 +5,7 @@ import { IoMenu } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import classnames from "classnames";
 import { useSession } from "next-auth/react";
-import { Box } from "@radix-ui/themes";
+import { Avatar, Box, Button, DropdownMenu, Text } from "@radix-ui/themes";
 
 const NavBar = () => {
   const curPathName = usePathname();
@@ -37,12 +37,25 @@ const NavBar = () => {
       </Box>
       <Box className="pr-4">
         {status === "authenticated" && (
-          <Link
-            href="/api/auth/signout"
-            className="text-zinc-500 hover:text-zinc-900 transition-colors"
-          >
-            Sign Out
-          </Link>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <Avatar
+                src={session!.user!.image!}
+                fallback="?"
+                size="2"
+                radius="full"
+                className="cursor-pointer"
+              />
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+              <DropdownMenu.Item>
+                <Text size="2">{session!.user!.email}</Text>
+              </DropdownMenu.Item>
+              <DropdownMenu.Item>
+                <Link href="/api/auth/signout">Sign Out</Link>
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
         )}
         {status === "unauthenticated" && (
           <Link
