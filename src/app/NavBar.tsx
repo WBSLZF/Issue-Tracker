@@ -14,44 +14,45 @@ const NavBar = () => {
     { href: "/dashboard", label: "Dashboard" },
     { href: "/issues", label: "Issues" },
   ];
-  console.log("Current pathname:", curPathName);
   const { status, data: session } = useSession();
 
   return (
-    <nav className="flex space-x-6">
-      <ul className="flex space-x-6 pl-5 top-2 h-14 border-b-2 border-b-gray-500 w-full items-center">
-        {links.map((link) => (
+    <nav className="flex space-x-6 justify-between border-b-2 border-b-gray-500 items-center h-14">
+      <Box className="flex items-center">
+        <ul className="flex space-x-6 pl-5 items-center">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              className={classnames({
+                "text-zinc-900": curPathName === link.href,
+                "text-zinc-500": curPathName !== link.href,
+                "hover:text-zinc-900 transition-colors": true,
+              })}
+              href={link.href}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </ul>
+      </Box>
+      <Box className="pr-4">
+        {status === "authenticated" && (
           <Link
-            key={link.href}
-            className={classnames({
-              "text-zinc-900": curPathName === link.href,
-              "text-zinc-500": curPathName !== link.href,
-              "hover:text-zinc-900 transition-colors": true,
-            })}
-            href={link.href}
+            href="/api/auth/signout"
+            className="text-zinc-500 hover:text-zinc-900 transition-colors"
           >
-            {link.label}
+            Sign Out
           </Link>
-        ))}
-        <Box>
-          {status === "authenticated" && (
-            <Link
-              href="/api/auth/signout"
-              className="text-zinc-500 hover:text-zinc-900 transition-colors"
-            >
-              Sign Out
-            </Link>
-          )}
-          {status === "unauthenticated" && (
-            <Link
-              href="/api/auth/signin"
-              className="text-zinc-500 hover:text-zinc-900 transition-colors"
-            >
-              Sign In
-            </Link>
-          )}
-        </Box>
-      </ul>
+        )}
+        {status === "unauthenticated" && (
+          <Link
+            href="/api/auth/signin"
+            className="text-zinc-500 hover:text-zinc-900 transition-colors"
+          >
+            Sign In
+          </Link>
+        )}
+      </Box>
     </nav>
   );
 };
