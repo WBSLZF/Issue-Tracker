@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "./NavBar";
 import "./theme-config.css";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,10 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body>
-        <Theme accentColor="blue">
-          <NavBar />
-          {children}
-        </Theme>
+        <SessionProvider>
+          <Theme accentColor="blue">
+            <NavBar />
+            {children}
+          </Theme>
+        </SessionProvider>
       </body>
     </html>
   );
