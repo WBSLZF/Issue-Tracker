@@ -34,7 +34,7 @@ const NavLink = () => {
         <Link
           key={link.href}
           className={classnames({
-            "text-zinc-900": curPathName === link.href,
+            "!text-zinc-900": curPathName === link.href,
             "nav-link": true,
           })}
           href={link.href}
