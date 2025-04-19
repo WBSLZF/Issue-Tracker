@@ -4,6 +4,7 @@ import IssueDetailContainer from "./IssueDetailContainer";
 import IssueEdittingButton from "./IssueSubmittingButton";
 import DeleteIssueButton from "./IssueDeleteButton";
 import { auth } from "auth";
+import AsignSelectIssueButton from "./AsignSelectIssueButton";
 interface props {
   params: Promise<{ id: string }>;
 }
@@ -26,7 +27,8 @@ const IssueDetailPage = async ({ params }: props) => {
         <IssueDetailContainer issueDetail={issueDetail} />
       </div>
       {session && (
-        <div className="mt-2 flex flex-col gap-y-2 w-auto mr-4">
+        <div className="mt-8 flex flex-col gap-y-2 w-auto mr-8 ml-8">
+          <AsignSelectIssueButton />
           <IssueEdittingButton id={parseInt(id)} />
           <DeleteIssueButton id={parseInt(id)}></DeleteIssueButton>
         </div>
