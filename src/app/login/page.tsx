@@ -1,5 +1,5 @@
 "use client";
-import { Button, Box, Text, Separator } from "@radix-ui/themes";
+import { Button, Box, Text, Separator, Spinner } from "@radix-ui/themes";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,7 +37,7 @@ export default function LoginPage() {
       // 这里处理账号密码登录逻辑
       // TODO: 实现具体的登录逻辑
 
-      router.push("/dashboard");
+      router.push("/issues");
     } catch (error) {
       setError("登录失败，请检查账号密码");
     } finally {
@@ -46,8 +46,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <Box className="w-full max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="w-full max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg">
         <div className="mb-6 text-center">
           <Text size="6" weight="bold">
             登录账号
@@ -83,7 +83,8 @@ export default function LoginPage() {
           </div>
 
           <Button className="w-full" disabled={isLoading}>
-            {isLoading ? "登录中..." : "登录"}
+            登录
+            {isLoading ? <Spinner /> : ""}
           </Button>
         </form>
 
@@ -92,7 +93,7 @@ export default function LoginPage() {
             <div className="absolute inset-0 flex items-center">
               <Separator size="4" />
             </div>
-            <div className="relative flex justify-center text-sm">
+            <div className="relative flex justify-center">
               <Text className="px-2 bg-white text-gray-500">
                 或使用以下方式登录
               </Text>
@@ -100,25 +101,17 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <Button
-              variant="outline"
-              onClick={() => signIn("github")}
-              className="w-full"
-            >
+            <Button variant="outline" onClick={() => signIn("github")}>
               <i className="fab fa-github mr-2"></i>
               GitHub
             </Button>
-            <Button
-              variant="outline"
-              onClick={() => signIn("google")}
-              className="w-full"
-            >
+            <Button variant="outline" onClick={() => signIn("google")}>
               <i className="fab fa-google mr-2"></i>
               Google
             </Button>
           </div>
         </div>
-      </Box>
+      </div>
     </div>
   );
 }

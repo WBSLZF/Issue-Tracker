@@ -1,7 +1,8 @@
 // Server Component
 import prisma from "@/app/lib/prisma";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import EditIssueClient from "./EditIssueClient";
+import { auth } from "auth";
 
 interface Props {
   params: { id: string };
@@ -9,7 +10,10 @@ interface Props {
 
 const EditIssuePage = async ({ params }: Props) => {
   const { id } = await params;
-
+  const session = await auth();
+  if (!session) {
+    redirect("/login");
+  }
   if (!id || isNaN(parseInt(id))) {
     notFound();
   }

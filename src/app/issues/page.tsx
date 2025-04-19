@@ -5,6 +5,7 @@ import IssueTableBody from "./IssueTableBody";
 import IssueTableHeader from "./IssueTableHeader";
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
+
   return (
     <div>
       <IssueAction />

@@ -4,8 +4,9 @@ import LoadingIssueForm from "../_components/LoadingIssueForm";
 
 const IssueForm = dynamic(() => import("../_components/IssueForm"), {
   ssr: false,
-  loading: () => <LoadingIssueForm />,
+  loading: () => <LoadingIssueForm />, // cause it rely on browser api
 });
+
 const NewIssuesPage = () => {
   return <IssueForm />;
 };
