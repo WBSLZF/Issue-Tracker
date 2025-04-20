@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { validateIssueSchema } from "@/app/validationIssueSchema";
+import { valiedateAssigneeSchema } from "@/app/validationIssueSchema";
 import prisma from "@/app/lib/prisma";
 
 export async function PATCH(
@@ -7,7 +7,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const body = await request.json();
-  const validataResult = validateIssueSchema.safeParse(body);
+  const validataResult = valiedateAssigneeSchema.safeParse(body);
   if (!validataResult.success) {
     return NextResponse.json(
       { error: validataResult.error.format() },
@@ -28,6 +28,7 @@ export async function PATCH(
     data: {
       title: validataResult.data.title,
       description: validataResult.data.description,
+      assignedToUserId: validataResult.data.assignedToUserId,
     },
   });
   return NextResponse.json(updatedIssue, { status: 200 });
