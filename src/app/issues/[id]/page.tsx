@@ -28,7 +28,7 @@ const IssueDetailPage = async ({ params }: props) => {
       </div>
       {session && (
         <div className="mt-8 flex flex-col gap-y-2 w-auto mr-8 ml-8">
-          <AsignSelectIssueButton />
+          <AsignSelectIssueButton issue={issueDetail} />
           <IssueEdittingButton id={parseInt(id)} />
           <DeleteIssueButton id={parseInt(id)}></DeleteIssueButton>
         </div>
