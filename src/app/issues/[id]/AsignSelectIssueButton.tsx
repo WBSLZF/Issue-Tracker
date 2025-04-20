@@ -3,15 +3,21 @@ import { Select } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
 import { User } from "@prisma/client";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import Skeleton from "react-loading-skeleton";
 const AsignSelectIssueButton = () => {
-  const [users, setUsers] = useState<User[]>();
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { data } = await axios.get<User[]>("/api/users");
-      setUsers(data);
-    };
-    fetchUsers();
-  }, []);
+  const {
+    data: users,
+    error,
+    isLoading,
+  } = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
+    staleTime: 60 * 1000, // 数据1分钟更新一次
+    retry: 3,
+  });
+  if (isLoading) return <Skeleton className="h-8" />;
+  if (error) return null;
   return (
     <Select.Root>
       <Select.Trigger placeholder="Assign to" />
