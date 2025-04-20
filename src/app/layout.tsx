@@ -6,6 +6,7 @@ import "./globals.css";
 import NavBar from "./NavBar";
 import "./theme-config.css";
 import { SessionProvider } from "next-auth/react";
+import QueryClientProvider from "./components/QueryClientProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,12 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body>
-        <SessionProvider>
-          <Theme accentColor="blue">
-            <NavBar />
-            {children}
-          </Theme>
-        </SessionProvider>
+        <QueryClientProvider>
+          <SessionProvider>
+            <Theme accentColor="blue">
+              <NavBar />
+              {children}
+            </Theme>
+          </SessionProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
