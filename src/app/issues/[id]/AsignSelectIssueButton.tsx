@@ -16,6 +16,12 @@ const AsignSelectIssueButton = ({ issue }: { issue: Issue }) => {
         toast.error("Failed to assign the issue");
       });
   };
+  const usersQuery = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
+    staleTime: 60 * 1000, // 数据1分钟更新一次
+    retry: 3,
+  });
   const { data: users, error, isLoading } = usersQuery;
   if (isLoading) return <Skeleton className="h-8" />;
   if (error) return null;
@@ -47,10 +53,4 @@ const AsignSelectIssueButton = ({ issue }: { issue: Issue }) => {
   );
 };
 
-const usersQuery = useQuery<User[]>({
-  queryKey: ["users"],
-  queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
-  staleTime: 60 * 1000, // 数据1分钟更新一次
-  retry: 3,
-});
 export default AsignSelectIssueButton;
