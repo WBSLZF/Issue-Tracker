@@ -3,8 +3,17 @@ import prisma from "../lib/prisma";
 import IssueAction from "./IssueAction";
 import IssueTableBody from "./IssueTableBody";
 import IssueTableHeader from "./IssueTableHeader";
-const IssuesPage = async () => {
-  const issues = await prisma.issue.findMany();
+import { Status } from "@prisma/client";
+
+interface Props {
+  searchParams: Promise<{ status: Status }>;
+}
+
+const IssuesPage = async ({ searchParams }: Props) => {
+  const { status } = await searchParams;
+  const issues = await prisma.issue.findMany({
+    where: { status },
+  });
 
   return (
     <div>
@@ -21,5 +30,4 @@ const IssuesPage = async () => {
   );
 };
 
-export const dynamic = "force-dynamic";
 export default IssuesPage;
