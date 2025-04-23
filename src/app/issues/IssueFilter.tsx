@@ -31,7 +31,6 @@ const IssueFilter = () => {
             currentParams.get("orderDirection") as string
           );
         }
-        console.log("params", params.toString());
         const query = "/issues?" + (params ? params.toString() : "");
         router.push(query);
       }}
