@@ -22,9 +22,8 @@ interface Props {
 
 const IssuesPage = async ({ searchParams }: Props) => {
   const params = await searchParams;
-  const validatedParams = searchParamsSchema.safeParse(params);
+  const validatedParams = searchParamsSchema.safeParse(params); // 如果验证失败，使用默认值
 
-  // 如果验证失败，使用默认值
   const { status, orderByStatus, orderDirection } = validatedParams.success
     ? validatedParams.data
     : {
