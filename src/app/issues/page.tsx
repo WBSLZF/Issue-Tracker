@@ -7,7 +7,7 @@ import { Status } from "@prisma/client";
 import { z } from "zod";
 
 const searchParamsSchema = z.object({
-  status: z.nativeEnum(Status),
+  status: z.enum(["OPEN", "IN_PROGRESS", "CLOSED", "ALL"]),
   orderByStatus: z.enum(["title", "status", "createdAt"]).optional(),
   orderDirection: z.enum(["asc", "desc"]).optional(),
 });
@@ -23,7 +23,7 @@ interface Props {
 const IssuesPage = async ({ searchParams }: Props) => {
   const params = await searchParams;
   const validatedParams = searchParamsSchema.safeParse(params); // 如果验证失败，使用默认值
-
+  console.log("validatedParams", validatedParams.success);
   const { status, orderByStatus, orderDirection } = validatedParams.success
     ? validatedParams.data
     : {
@@ -33,7 +33,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
       };
 
   const issues = await prisma.issue.findMany({
-    where: { status },
+    where: { status: status === "ALL" ? undefined : status },
     orderBy: orderByStatus
       ? { [orderByStatus as string]: orderDirection }
       : undefined,
