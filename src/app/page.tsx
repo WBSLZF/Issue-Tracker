@@ -1,6 +1,1 @@
-import Link from "next/link";
-import Pagination from "./components/Pagination";
-
-export default function Page() {
-  return <Pagination currentPage={1} itemCount={100} pageSize={10} />;
-}
+export default async function Page({}: {}) {}
